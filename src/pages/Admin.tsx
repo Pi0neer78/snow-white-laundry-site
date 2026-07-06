@@ -10,6 +10,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
   Table,
   TableBody,
   TableCell,
@@ -74,7 +80,7 @@ const Admin = () => {
   const [updating, setUpdating] = useState<number | null>(null);
   const [search, setSearch] = useState('');
   const [searchInput, setSearchInput] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState<string[]>([]);
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -110,7 +116,7 @@ const Admin = () => {
     try {
       const params = new URLSearchParams({ page: String(page), limit: String(limit) });
       if (search) params.set('search', search);
-      if (statusFilter !== 'all') params.set('status', statusFilter);
+      if (statusFilter.length > 0) params.set('status', statusFilter.join(','));
       const res = await fetch(`${ORDERS_URL}?${params.toString()}`);
       const data = await res.json();
       setOrders(data.orders || []);
@@ -232,25 +238,35 @@ const Admin = () => {
 
           <div className="flex items-center gap-2 text-sm">
             <span className="text-muted-foreground whitespace-nowrap">Статус:</span>
-            <Select
-              value={statusFilter}
-              onValueChange={(v) => {
-                setStatusFilter(v);
-                setPage(1);
-              }}
-            >
-              <SelectTrigger className="w-48 rounded-xl">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Все статусы</SelectItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-56 justify-between rounded-xl font-normal">
+                  <span className="truncate">
+                    {statusFilter.length === 0
+                      ? 'Все статусы'
+                      : statusFilter.map((s) => STATUS_LABELS[s]).join(', ')}
+                  </span>
+                  <Icon name="ChevronDown" size={16} className="shrink-0 opacity-50" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
                 {Object.entries(STATUS_LABELS).map(([value, label]) => (
-                  <SelectItem key={value} value={value}>
+                  <DropdownMenuCheckboxItem
+                    key={value}
+                    checked={statusFilter.includes(value)}
+                    onCheckedChange={(checked) => {
+                      setStatusFilter((prev) =>
+                        checked ? [...prev, value] : prev.filter((s) => s !== value)
+                      );
+                      setPage(1);
+                    }}
+                    onSelect={(e) => e.preventDefault()}
+                  >
                     {label}
-                  </SelectItem>
+                  </DropdownMenuCheckboxItem>
                 ))}
-              </SelectContent>
-            </Select>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           <p className="text-muted-foreground">

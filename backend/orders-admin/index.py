@@ -48,15 +48,16 @@ def handler(event: dict, context) -> dict:
             offset = (page - 1) * limit
 
             search = (params.get('search') or '').strip()
-            status_filter = (params.get('status') or '').strip()
+            status_param = (params.get('status') or '').strip()
+            statuses = [s for s in status_param.split(',') if s in ALLOWED_STATUSES] if status_param else []
 
             conditions = []
             if search:
                 search_escaped = search.replace("'", "''").replace('%', '\\%').replace('_', '\\_')
                 conditions.append(f"(name ILIKE '%{search_escaped}%' OR phone ILIKE '%{search_escaped}%')")
-            if status_filter in ALLOWED_STATUSES:
-                status_escaped = status_filter.replace("'", "''")
-                conditions.append(f"status = '{status_escaped}'")
+            if statuses:
+                statuses_list = ", ".join(f"'{s}'" for s in statuses)
+                conditions.append(f"status IN ({statuses_list})")
 
             where = f"WHERE {' AND '.join(conditions)}" if conditions else ''
 
