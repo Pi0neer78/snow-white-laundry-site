@@ -72,6 +72,8 @@ const Admin = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [updating, setUpdating] = useState<number | null>(null);
+  const [search, setSearch] = useState('');
+  const [searchInput, setSearchInput] = useState('');
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,18 +107,28 @@ const Admin = () => {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${ORDERS_URL}?page=${page}&limit=${limit}`);
+      const params = new URLSearchParams({ page: String(page), limit: String(limit) });
+      if (search) params.set('search', search);
+      const res = await fetch(`${ORDERS_URL}?${params.toString()}`);
       const data = await res.json();
       setOrders(data.orders || []);
       setTotal(data.total || 0);
     } finally {
       setLoading(false);
     }
-  }, [page, limit]);
+  }, [page, limit, search]);
 
   useEffect(() => {
     if (authed) load();
   }, [authed, load]);
+
+  useEffect(() => {
+    const handle = setTimeout(() => {
+      setPage(1);
+      setSearch(searchInput.trim());
+    }, 400);
+    return () => clearTimeout(handle);
+  }, [searchInput]);
 
   const changeStatus = async (id: number, status: string) => {
     setUpdating(id);
@@ -191,6 +203,19 @@ const Admin = () => {
 
       <main className="container py-8">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div className="relative w-full sm:w-72">
+            <Icon
+              name="Search"
+              size={16}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+            />
+            <Input
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              placeholder="Поиск по имени или телефону"
+              className="pl-9 h-10 rounded-xl bg-[#f5fafd]"
+            />
+          </div>
           <p className="text-muted-foreground">
             Всего заявок: <span className="font-semibold text-foreground">{total}</span>
           </p>

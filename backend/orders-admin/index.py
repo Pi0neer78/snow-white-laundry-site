@@ -47,15 +47,21 @@ def handler(event: dict, context) -> dict:
                 limit = 10
             offset = (page - 1) * limit
 
+            search = (params.get('search') or '').strip()
+            where = ''
+            if search:
+                search_escaped = search.replace("'", "''").replace('%', '\\%').replace('_', '\\_')
+                where = f"WHERE name ILIKE '%{search_escaped}%' OR phone ILIKE '%{search_escaped}%'"
+
             cur = conn.cursor()
-            cur.execute("SELECT COUNT(*) FROM orders")
+            cur.execute(f"SELECT COUNT(*) FROM orders {where}")
             total = cur.fetchone()[0]
             cur.close()
 
             cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
             cur.execute(
                 f"SELECT id, name, phone, comment, ip_address, user_agent, os_info, "
-                f"created_at, status FROM orders ORDER BY created_at DESC LIMIT {limit} OFFSET {offset}"
+                f"created_at, status FROM orders {where} ORDER BY created_at DESC LIMIT {limit} OFFSET {offset}"
             )
             rows = cur.fetchall()
             cur.close()
