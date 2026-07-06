@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-const MAID = 'https://cdn.poehali.dev/projects/3a749f47-e4bb-4bb2-bfdd-eea651eef4ec/bucket/31fac207-6f76-4a7e-9b03-f453604f3979.png';
+const MAID = 'https://cdn.poehali.dev/projects/3a749f47-e4bb-4bb2-bfdd-eea651eef4ec/bucket/f7509daa-b67d-49b3-a1bc-c005585a0516.png';
 const HERO = 'https://cdn.poehali.dev/projects/3a749f47-e4bb-4bb2-bfdd-eea651eef4ec/files/f0da4b9e-ba5b-48b5-83a7-0f7ce76df943.jpg';
 
 const services = [
