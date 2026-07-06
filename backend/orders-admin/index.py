@@ -23,14 +23,39 @@ def handler(event: dict, context) -> dict:
 
     headers = {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
 
+    if method == 'POST':
+        body = json.loads(event.get('body') or '{}')
+        password = body.get('password') or ''
+        if password == os.environ.get('ADMIN_PANEL_PASSWORD'):
+            return {'statusCode': 200, 'headers': headers, 'body': json.dumps({'success': True})}
+        return {'statusCode': 401, 'headers': headers, 'body': json.dumps({'error': 'Неверный пароль'})}
+
     dsn = os.environ['DATABASE_URL']
     conn = psycopg2.connect(dsn)
     try:
         if method == 'GET':
+            params = event.get('queryStringParameters') or {}
+            try:
+                page = max(1, int(params.get('page', 1)))
+            except (TypeError, ValueError):
+                page = 1
+            try:
+                limit = int(params.get('limit', 10))
+            except (TypeError, ValueError):
+                limit = 10
+            if limit not in (5, 10, 25, 50, 100):
+                limit = 10
+            offset = (page - 1) * limit
+
+            cur = conn.cursor()
+            cur.execute("SELECT COUNT(*) FROM orders")
+            total = cur.fetchone()[0]
+            cur.close()
+
             cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
             cur.execute(
-                "SELECT id, name, phone, comment, ip_address, user_agent, os_info, "
-                "created_at, status FROM orders ORDER BY created_at DESC"
+                f"SELECT id, name, phone, comment, ip_address, user_agent, os_info, "
+                f"created_at, status FROM orders ORDER BY created_at DESC LIMIT {limit} OFFSET {offset}"
             )
             rows = cur.fetchall()
             cur.close()
@@ -47,7 +72,11 @@ def handler(event: dict, context) -> dict:
                     'created_at': r['created_at'].isoformat(),
                     'status': r['status']
                 })
-            return {'statusCode': 200, 'headers': headers, 'body': json.dumps({'orders': orders})}
+            return {
+                'statusCode': 200,
+                'headers': headers,
+                'body': json.dumps({'orders': orders, 'total': total, 'page': page, 'limit': limit})
+            }
 
         if method == 'PUT':
             body = json.loads(event.get('body') or '{}')
