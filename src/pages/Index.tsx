@@ -81,7 +81,7 @@ const Index = () => {
             <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-primary shadow-sm mb-6">
               <Icon name="Sparkles" size={16} /> Чисто. Свежо. Вовремя.
             </span>
-            <h1 className="font-heading font-black text-5xl lg:text-6xl leading-[1.05] mb-6">
+            <h1 className="font-heading font-black text-4xl sm:text-5xl xl:text-6xl leading-[1.1] mb-6 break-words">
               Профессиональная <span className="text-primary">прачечная</span> для вас и вашего бизнеса
             </h1>
             <p className="text-lg text-muted-foreground max-w-md mb-8">
@@ -107,7 +107,7 @@ const Index = () => {
             </div>
           </div>
           <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
-            <img src={HERO} alt="Стопки свежего белья" className="rounded-[2rem] shadow-2xl shadow-primary/10 w-full object-cover aspect-square" />
+            <img src={HERO} alt="Стопки свежего белья" className="animate-float rounded-[2rem] shadow-2xl shadow-primary/10 w-full object-cover aspect-square" />
           </div>
         </div>
       </section>
