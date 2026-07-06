@@ -209,8 +209,21 @@ const Admin = () => {
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && runSearch()}
                 placeholder="Поиск по имени или телефону"
-                className="h-10 rounded-xl bg-[#f5fafd]"
+                className="h-10 rounded-xl bg-[#f5fafd] pr-9"
               />
+              {(searchInput || search) && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchInput('');
+                    setSearch('');
+                    setPage(1);
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  <Icon name="X" size={16} />
+                </button>
+              )}
             </div>
             <Button onClick={runSearch} size="icon" className="rounded-xl h-10 w-10 shrink-0">
               <Icon name="Search" size={16} />
