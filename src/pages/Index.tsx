@@ -55,10 +55,10 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white font-body text-foreground">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-border">
-        <div className="container flex items-center justify-between h-20">
-          <button onClick={() => scrollTo('home')} className="flex items-center gap-2">
-            <img src={MAID} alt="Белоснежка" className="h-[42px] w-auto object-contain" />
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-border overflow-visible">
+        <div className="container flex items-center justify-between h-20 overflow-visible">
+          <button onClick={() => scrollTo('home')} className="flex items-center gap-2 overflow-visible">
+            <img src={MAID} alt="Белоснежка" className="h-[84px] w-auto object-contain" />
             <span className="font-heading font-extrabold text-2xl text-accent tracking-wide">"БЕЛОСНЕЖКА"</span>
           </button>
           <nav className="hidden lg:flex items-center gap-8">
