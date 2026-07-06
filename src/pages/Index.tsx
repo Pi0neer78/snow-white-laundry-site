@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-const MAID = 'https://cdn.poehali.dev/projects/3a749f47-e4bb-4bb2-bfdd-eea651eef4ec/files/8836976a-2d19-40cb-b6ea-1d8da74d9c23.jpg';
+const MAID = 'https://cdn.poehali.dev/projects/3a749f47-e4bb-4bb2-bfdd-eea651eef4ec/bucket/31fac207-6f76-4a7e-9b03-f453604f3979.png';
 const HERO = 'https://cdn.poehali.dev/projects/3a749f47-e4bb-4bb2-bfdd-eea651eef4ec/files/f0da4b9e-ba5b-48b5-83a7-0f7ce76df943.jpg';
 
 const services = [
@@ -58,7 +58,7 @@ const Index = () => {
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-border">
         <div className="container flex items-center justify-between h-20">
           <button onClick={() => scrollTo('home')} className="flex items-center gap-2">
-            <img src={MAID} alt="Белоснежка" className="h-14 w-auto object-contain -mb-4" />
+            <img src={MAID} alt="Белоснежка" className="h-[42px] w-auto object-contain" />
             <span className="font-heading font-extrabold text-2xl text-accent tracking-wide">"БЕЛОСНЕЖКА"</span>
           </button>
           <nav className="hidden lg:flex items-center gap-8">
