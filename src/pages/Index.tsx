@@ -296,7 +296,7 @@ const Index = () => {
             <div className="rounded-2xl overflow-hidden border border-border h-72 bg-white">
               <iframe
                 title="Карта: г. Антрацит, ул. Смирнова, д. 15 А"
-                src="https://yandex.ru/map-widget/v1/?text=г.%20Антрацит%2C%20ул.%20Смирнова%2C%20д.%2015%20А&z=16"
+                src="https://yandex.ru/map-widget/v1/?ll=39.100421%2C48.114483&z=16&pt=39.100421%2C48.114483%2Cpm2rdm"
                 className="w-full h-full border-0"
                 loading="lazy"
               />
