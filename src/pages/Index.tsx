@@ -100,7 +100,7 @@ const Index = () => {
             <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-primary shadow-sm mb-6">
               <Icon name="Sparkles" size={16} /> Чисто. Свежо. Вовремя.
             </span>
-            <h1 className="font-heading font-black text-4xl sm:text-5xl xl:text-6xl leading-[1.1] mb-6 break-words">
+            <h1 className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.1] mb-6">
               Профессиональная <span className="text-primary">прачечная</span> для вас и вашего бизнеса
             </h1>
             <p className="text-lg text-muted-foreground max-w-md mb-8">
