@@ -171,73 +171,78 @@ const Index = () => {
             <p className="text-lg text-muted-foreground">Прозрачные тарифы без скрытых платежей</p>
           </div>
 
-          <h3 className="font-heading font-bold text-xl text-primary text-center mb-6">
+          <h3 className="font-heading font-bold text-xl text-red-600 text-center mb-6">
             Прейскурант на стирку белья, гардин, тюль и штор
           </h3>
           <div className="overflow-x-auto mb-16">
-            <table className="w-full border-collapse border border-border text-sm">
+            <table className="w-full border-collapse border border-black text-sm">
               <thead>
-                <tr className="bg-secondary/50">
-                  <th className="border border-border p-3 font-heading font-bold w-12">№</th>
-                  <th className="border border-border p-3 font-heading font-bold text-left">Наименование изделий</th>
-                  <th className="border border-border p-3 font-heading font-bold w-40">Цена</th>
+                <tr>
+                  <th className="border border-black p-3 font-bold w-12">№</th>
+                  <th className="border border-black p-3 font-bold text-left">Наименование изделий</th>
+                  <th className="border border-black p-3 font-bold text-left w-56"></th>
+                  <th className="border border-black p-3 font-bold w-32">Цена</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td rowSpan={2} className="border border-border p-3 text-center">1</td>
-                  <td rowSpan={2} className="border border-border p-3 font-medium align-middle">Стирка белья:</td>
-                  <td className="border border-border p-3">до 4 кг — (независимо от массы сданного белья) <span className="block font-bold text-primary mt-1">900 руб.</span></td>
+                  <td rowSpan={2} className="border border-black p-3 text-center align-middle">1</td>
+                  <td rowSpan={2} className="border border-black p-3 font-bold align-middle">Стирка белья:</td>
+                  <td className="border border-black p-3">до 4 кг – (независимо от массы сданного белья)</td>
+                  <td className="border border-black p-3 text-right font-bold">900 руб.</td>
                 </tr>
                 <tr>
-                  <td className="border border-border p-3">свыше 4 кг <span className="block font-bold text-primary mt-1">225 руб. за 1 кг</span></td>
+                  <td className="border border-black p-3">свыше 4 кг</td>
+                  <td className="border border-black p-3 text-right font-bold">225 руб.<br />за 1 кг</td>
                 </tr>
                 <tr>
-                  <td rowSpan={2} className="border border-border p-3 text-center">2</td>
-                  <td rowSpan={2} className="border border-border p-3 font-medium align-middle">Стирка белья с добавлением крахмала:</td>
-                  <td className="border border-border p-3">до 4 кг — (независимо от массы сданного белья) <span className="block font-bold text-primary mt-1">1200 руб.</span></td>
+                  <td rowSpan={2} className="border border-black p-3 text-center align-middle">2</td>
+                  <td rowSpan={2} className="border border-black p-3 font-bold align-middle">Стирка белья с добавлением крахмала:</td>
+                  <td className="border border-black p-3">до 4 кг – (независимо от массы сданного белья)</td>
+                  <td className="border border-black p-3 text-right font-bold">1200 руб.</td>
                 </tr>
                 <tr>
-                  <td className="border border-border p-3">свыше 4 кг <span className="block font-bold text-primary mt-1">300 руб. за 1 кг</span></td>
+                  <td className="border border-black p-3">свыше 4 кг</td>
+                  <td className="border border-black p-3 text-right font-bold">300 руб.<br />за 1 кг</td>
                 </tr>
                 <tr>
-                  <td className="border border-border p-3 text-center">3</td>
-                  <td className="border border-border p-3 font-medium">Гардины, тюль, шторы</td>
-                  <td className="border border-border p-3 font-bold text-primary">650 руб. за 1 кг</td>
+                  <td className="border border-black p-3 text-center">3</td>
+                  <td colSpan={2} className="border border-black p-3 font-bold">Гардины, тюль, шторы</td>
+                  <td className="border border-black p-3 text-right font-bold">650 руб.<br />за 1 кг</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <h3 className="font-heading font-bold text-xl text-primary text-center mb-6">
+          <h3 className="font-heading font-bold text-xl text-red-600 text-center mb-6">
             Прейскурант на услуги прачечной для спецодежды
           </h3>
           <div className="overflow-x-auto mb-10">
-            <table className="w-full border-collapse border border-border text-sm">
+            <table className="w-full border-collapse border border-black text-sm">
               <thead>
-                <tr className="bg-secondary/50">
-                  <th className="border border-border p-3 font-heading font-bold w-12">№</th>
-                  <th className="border border-border p-3 font-heading font-bold text-left">Наименование изделий</th>
-                  <th className="border border-border p-3 font-heading font-bold w-40">Цена (руб)</th>
+                <tr>
+                  <th className="border border-black p-3 font-bold w-12">№</th>
+                  <th className="border border-black p-3 font-bold text-left">Наименование изделий</th>
+                  <th className="border border-black p-3 font-bold w-40">Цена(руб)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="border border-border p-3 text-center">1</td>
-                  <td className="border border-border p-3 font-medium">Спец. одежда за 1 кг (без глажки)</td>
-                  <td className="border border-border p-3 font-bold text-primary">300</td>
+                  <td className="border border-black p-3 text-center">1</td>
+                  <td className="border border-black p-3">Спец. одежда за 1кг (без глажки)</td>
+                  <td className="border border-black p-3 text-right font-bold">300</td>
                 </tr>
                 <tr>
-                  <td className="border border-border p-3 text-center">2</td>
-                  <td className="border border-border p-3 font-medium">Спец. одежда за 1 кг (с глажкой)</td>
-                  <td className="border border-border p-3 font-bold text-primary">550</td>
+                  <td className="border border-black p-3 text-center">1</td>
+                  <td className="border border-black p-3">Спец. одежда за 1кг (с глажкой)</td>
+                  <td className="border border-black p-3 text-right font-bold">550</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           <div className="text-center">
-            <p className="font-heading font-bold mb-1">Надбавка за сложность + 30%</p>
+            <p className="font-heading font-bold text-lg mb-1">Надбавка за сложность + 30%</p>
             <p className="text-muted-foreground">Для организаций действуют специальные условия — уточняйте при заказе.</p>
           </div>
         </div>
