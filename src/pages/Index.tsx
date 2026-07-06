@@ -58,7 +58,7 @@ const Index = () => {
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-border overflow-visible">
         <div className="container flex items-center justify-between h-20 overflow-visible">
           <button onClick={() => scrollTo('home')} className="flex items-center gap-2 overflow-visible">
-            <img src={MAID} alt="Белоснежка" className="h-[84px] w-auto object-contain" />
+            <img src={MAID} alt="Белоснежка" className="h-[150px] w-auto object-contain" />
             <span className="font-heading font-extrabold text-2xl text-accent tracking-wide">"БЕЛОСНЕЖКА"</span>
           </button>
           <nav className="hidden lg:flex items-center gap-8">
