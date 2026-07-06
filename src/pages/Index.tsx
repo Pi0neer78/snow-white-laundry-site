@@ -125,8 +125,8 @@ const Index = () => {
               </div>
             </div>
           </div>
-          <div className="animate-fade-in" style={{ animationDelay: '0.15s' }}>
-            <img src={HERO} alt="Стопки свежего белья" className="animate-float rounded-[2rem] shadow-2xl shadow-primary/10 w-full object-cover aspect-square" />
+          <div className="animate-fade-in relative z-0" style={{ animationDelay: '0.15s' }}>
+            <img src={HERO} alt="Стопки свежего белья" className="animate-float rounded-[2rem] shadow-2xl shadow-primary/10 w-full max-w-md xl:max-w-lg mx-auto object-cover aspect-square" />
           </div>
         </div>
       </section>
