@@ -293,19 +293,14 @@ const Index = () => {
                 <span className="font-semibold">С понедельника по пятницу с 8:00 до 16:00</span>
               </div>
             </div>
-            <a
-              href="https://yandex.ru/maps/?text=Антрацит, ул. Смирнова, 15А"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block rounded-2xl overflow-hidden border border-border h-56 bg-white"
-            >
+            <div className="rounded-2xl overflow-hidden border border-border h-72 bg-white">
               <iframe
-                title="Карта"
-                src="https://yandex.ru/map-widget/v1/?text=Антрацит%20улица%20Смирнова%2015&z=15"
-                className="w-full h-full pointer-events-none"
+                title="Карта: г. Антрацит, ул. Смирнова, д. 15 А"
+                src="https://yandex.ru/map-widget/v1/?text=г.%20Антрацит%2C%20ул.%20Смирнова%2C%20д.%2015%20А&z=16"
+                className="w-full h-full border-0"
                 loading="lazy"
               />
-            </a>
+            </div>
           </div>
 
           <div className="rounded-3xl bg-white p-8 lg:p-10 shadow-xl shadow-primary/5">
