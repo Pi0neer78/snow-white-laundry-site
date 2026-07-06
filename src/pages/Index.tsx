@@ -41,15 +41,34 @@ const scrollTo = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 };
 
+const SUBMIT_ORDER_URL = 'https://functions.poehali.dev/95f7f5c7-ed58-4d14-8385-c2f63ceaaf4c';
+
 const Index = () => {
   const [form, setForm] = useState({ name: '', phone: '', comment: '' });
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    setForm({ name: '', phone: '', comment: '' });
-    setTimeout(() => setSent(false), 4000);
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch(SUBMIT_ORDER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Ошибка отправки');
+      setSent(true);
+      setForm({ name: '', phone: '', comment: '' });
+      setTimeout(() => setSent(false), 4000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Не удалось отправить заявку');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -320,12 +339,17 @@ const Index = () => {
                   className="min-h-28 rounded-xl bg-[#f5fafd]"
                 />
               </div>
-              <Button type="submit" size="lg" className="w-full rounded-xl font-semibold text-base">
-                Отправить заявку
+              <Button type="submit" size="lg" disabled={loading} className="w-full rounded-xl font-semibold text-base">
+                {loading ? 'Отправляем...' : 'Отправить заявку'}
               </Button>
               {sent && (
                 <p className="text-center text-primary font-medium animate-fade-in">
                   Спасибо! Заявка отправлена, скоро перезвоним.
+                </p>
+              )}
+              {error && (
+                <p className="text-center text-destructive font-medium animate-fade-in">
+                  {error}
                 </p>
               )}
               <p className="text-center text-sm text-muted-foreground">

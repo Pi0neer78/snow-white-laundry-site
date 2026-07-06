@@ -1,0 +1,26 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Отправка заявки без имени",
+      "method": "POST",
+      "path": "/",
+      "body": {"phone": "+79001112233", "comment": "тест"},
+      "expectedStatus": 400
+    },
+    {
+      "name": "Успешная отправка заявки",
+      "method": "POST",
+      "path": "/",
+      "body": {"name": "Иван Иванов", "phone": "+79001112233", "comment": "Постирать бельё"},
+      "expectedStatus": 200,
+      "expectedBody": {"success": true},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

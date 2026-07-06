@@ -1,0 +1,25 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Получение списка заявок",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {"orders": []},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Смена статуса без id",
+      "method": "PUT",
+      "path": "/",
+      "body": {"status": "done"},
+      "expectedStatus": 400
+    }
+  ]
+}
