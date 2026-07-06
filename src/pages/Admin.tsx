@@ -270,55 +270,53 @@ const Admin = () => {
         <div className="rounded-2xl bg-white border border-border shadow-sm overflow-hidden">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead className="w-14">№</TableHead>
-                <TableHead>Имя</TableHead>
-                <TableHead>Телефон</TableHead>
-                <TableHead>Комментарий</TableHead>
-                <TableHead>IP-адрес</TableHead>
-                <TableHead>ОС</TableHead>
-                <TableHead>Дата</TableHead>
-                <TableHead className="w-56">Статус</TableHead>
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="w-14 h-9 py-1.5">№</TableHead>
+                <TableHead className="h-9 py-1.5">Имя</TableHead>
+                <TableHead className="h-9 py-1.5">Телефон</TableHead>
+                <TableHead className="h-9 py-1.5">Комментарий</TableHead>
+                <TableHead className="h-9 py-1.5">IP-адрес</TableHead>
+                <TableHead className="h-9 py-1.5">Дата</TableHead>
+                <TableHead className="w-48 h-9 py-1.5">Статус</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-10 text-muted-foreground">
+                  <TableCell colSpan={7} className="text-center py-10 text-muted-foreground">
                     Загрузка заявок...
                   </TableCell>
                 </TableRow>
               ) : orders.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center py-10 text-muted-foreground">
+                  <TableCell colSpan={7} className="text-center py-10 text-muted-foreground">
                     Заявок пока нет
                   </TableCell>
                 </TableRow>
               ) : (
                 orders.map((order) => (
                   <TableRow key={order.id}>
-                    <TableCell className="font-medium">{order.id}</TableCell>
-                    <TableCell className="font-medium">{order.name}</TableCell>
-                    <TableCell>
+                    <TableCell className="font-medium py-2">{order.id}</TableCell>
+                    <TableCell className="font-medium py-2">{order.name}</TableCell>
+                    <TableCell className="py-2">
                       <a href={`tel:${order.phone}`} className="text-primary hover:underline">
                         {order.phone}
                       </a>
                     </TableCell>
-                    <TableCell className="max-w-xs">
-                      <span className="text-muted-foreground line-clamp-2">{order.comment || '—'}</span>
+                    <TableCell className="max-w-xs py-2">
+                      <span className="text-muted-foreground line-clamp-1">{order.comment || '—'}</span>
                     </TableCell>
-                    <TableCell className="text-muted-foreground text-xs">{order.ip_address || '—'}</TableCell>
-                    <TableCell className="text-muted-foreground text-xs">{order.os_info || '—'}</TableCell>
-                    <TableCell className="text-muted-foreground text-xs whitespace-nowrap">
+                    <TableCell className="text-muted-foreground text-xs py-2">{order.ip_address || '—'}</TableCell>
+                    <TableCell className="text-muted-foreground text-xs whitespace-nowrap py-2">
                       {formatDate(order.created_at)}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="py-1.5">
                       <Select
                         value={order.status}
                         onValueChange={(v) => changeStatus(order.id, v)}
                         disabled={updating === order.id}
                       >
-                        <SelectTrigger className="w-full rounded-xl">
+                        <SelectTrigger className="w-full h-8 rounded-lg">
                           <SelectValue>
                             <span
                               className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${STATUS_COLORS[order.status]}`}
