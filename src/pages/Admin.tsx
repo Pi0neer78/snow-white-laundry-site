@@ -74,6 +74,7 @@ const Admin = () => {
   const [updating, setUpdating] = useState<number | null>(null);
   const [search, setSearch] = useState('');
   const [searchInput, setSearchInput] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -109,6 +110,7 @@ const Admin = () => {
     try {
       const params = new URLSearchParams({ page: String(page), limit: String(limit) });
       if (search) params.set('search', search);
+      if (statusFilter !== 'all') params.set('status', statusFilter);
       const res = await fetch(`${ORDERS_URL}?${params.toString()}`);
       const data = await res.json();
       setOrders(data.orders || []);
@@ -116,19 +118,16 @@ const Admin = () => {
     } finally {
       setLoading(false);
     }
-  }, [page, limit, search]);
+  }, [page, limit, search, statusFilter]);
 
   useEffect(() => {
     if (authed) load();
   }, [authed, load]);
 
-  useEffect(() => {
-    const handle = setTimeout(() => {
-      setPage(1);
-      setSearch(searchInput.trim());
-    }, 400);
-    return () => clearTimeout(handle);
-  }, [searchInput]);
+  const runSearch = () => {
+    setPage(1);
+    setSearch(searchInput.trim());
+  };
 
   const changeStatus = async (id: number, status: string) => {
     setUpdating(id);
@@ -203,22 +202,48 @@ const Admin = () => {
 
       <main className="container py-8">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-          <div className="relative w-full sm:w-72">
-            <Icon
-              name="Search"
-              size={16}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-            />
-            <Input
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              placeholder="Поиск по имени или телефону"
-              className="pl-9 h-10 rounded-xl bg-[#f5fafd]"
-            />
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <div className="relative w-full sm:w-72">
+              <Input
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && runSearch()}
+                placeholder="Поиск по имени или телефону"
+                className="h-10 rounded-xl bg-[#f5fafd]"
+              />
+            </div>
+            <Button onClick={runSearch} size="icon" className="rounded-xl h-10 w-10 shrink-0">
+              <Icon name="Search" size={16} />
+            </Button>
           </div>
+
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-muted-foreground whitespace-nowrap">Статус:</span>
+            <Select
+              value={statusFilter}
+              onValueChange={(v) => {
+                setStatusFilter(v);
+                setPage(1);
+              }}
+            >
+              <SelectTrigger className="w-48 rounded-xl">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Все статусы</SelectItem>
+                {Object.entries(STATUS_LABELS).map(([value, label]) => (
+                  <SelectItem key={value} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
           <p className="text-muted-foreground">
             Всего заявок: <span className="font-semibold text-foreground">{total}</span>
           </p>
+
           <div className="flex items-center gap-2 text-sm">
             <span className="text-muted-foreground">Строк на странице:</span>
             <Select

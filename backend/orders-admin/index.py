@@ -48,10 +48,17 @@ def handler(event: dict, context) -> dict:
             offset = (page - 1) * limit
 
             search = (params.get('search') or '').strip()
-            where = ''
+            status_filter = (params.get('status') or '').strip()
+
+            conditions = []
             if search:
                 search_escaped = search.replace("'", "''").replace('%', '\\%').replace('_', '\\_')
-                where = f"WHERE name ILIKE '%{search_escaped}%' OR phone ILIKE '%{search_escaped}%'"
+                conditions.append(f"(name ILIKE '%{search_escaped}%' OR phone ILIKE '%{search_escaped}%')")
+            if status_filter in ALLOWED_STATUSES:
+                status_escaped = status_filter.replace("'", "''")
+                conditions.append(f"status = '{status_escaped}'")
+
+            where = f"WHERE {' AND '.join(conditions)}" if conditions else ''
 
             cur = conn.cursor()
             cur.execute(f"SELECT COUNT(*) FROM orders {where}")
