@@ -114,6 +114,26 @@ def handler(event: dict, context) -> dict:
 
             return {'statusCode': 200, 'headers': headers, 'body': json.dumps({'success': True})}
 
+        if method == 'DELETE':
+            params = event.get('queryStringParameters') or {}
+            order_id = params.get('id')
+
+            try:
+                order_id = int(order_id)
+            except (TypeError, ValueError):
+                return {'statusCode': 400, 'headers': headers, 'body': json.dumps({'error': 'Не указан id заявки'})}
+
+            cur = conn.cursor()
+            cur.execute(f"DELETE FROM orders WHERE id = {order_id} RETURNING id")
+            row = cur.fetchone()
+            conn.commit()
+            cur.close()
+
+            if not row:
+                return {'statusCode': 404, 'headers': headers, 'body': json.dumps({'error': 'Заявка не найдена'})}
+
+            return {'statusCode': 200, 'headers': headers, 'body': json.dumps({'success': True})}
+
         return {'statusCode': 405, 'headers': headers, 'body': json.dumps({'error': 'Method not allowed'})}
     finally:
         conn.close()

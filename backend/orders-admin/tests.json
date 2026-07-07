@@ -27,6 +27,12 @@
       "path": "/",
       "body": {"status": "done"},
       "expectedStatus": 400
+    },
+    {
+      "name": "Удаление без id",
+      "method": "DELETE",
+      "path": "/",
+      "expectedStatus": 400
     }
   ]
 }

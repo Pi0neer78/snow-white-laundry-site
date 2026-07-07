@@ -16,6 +16,22 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from '@/components/ui/context-menu';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import {
   Table,
   TableBody,
   TableCell,
@@ -81,6 +97,8 @@ const Admin = () => {
   const [search, setSearch] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
+  const [deleting, setDeleting] = useState<Order | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -146,6 +164,19 @@ const Admin = () => {
       setOrders((prev) => prev.map((o) => (o.id === id ? { ...o, status } : o)));
     } finally {
       setUpdating(null);
+    }
+  };
+
+  const deleteOrder = async () => {
+    if (!deleting) return;
+    setDeleteLoading(true);
+    try {
+      await fetch(`${ORDERS_URL}?id=${deleting.id}`, { method: 'DELETE' });
+      setOrders((prev) => prev.filter((o) => o.id !== deleting.id));
+      setTotal((t) => Math.max(0, t - 1));
+      setDeleting(null);
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -324,7 +355,9 @@ const Admin = () => {
                 </TableRow>
               ) : (
                 orders.map((order) => (
-                  <TableRow key={order.id}>
+                  <ContextMenu key={order.id}>
+                    <ContextMenuTrigger asChild>
+                      <TableRow>
                     <TableCell className="font-medium py-2">{order.id}</TableCell>
                     <TableCell className="font-medium py-2">{order.name}</TableCell>
                     <TableCell className="py-2">
@@ -363,7 +396,17 @@ const Admin = () => {
                         </SelectContent>
                       </Select>
                     </TableCell>
-                  </TableRow>
+                      </TableRow>
+                    </ContextMenuTrigger>
+                    <ContextMenuContent>
+                      <ContextMenuItem
+                        className="text-destructive focus:text-destructive"
+                        onClick={() => setDeleting(order)}
+                      >
+                        <Icon name="Trash2" size={14} className="mr-2" /> Удалить заявку
+                      </ContextMenuItem>
+                    </ContextMenuContent>
+                  </ContextMenu>
                 ))
               )}
             </TableBody>
@@ -396,6 +439,30 @@ const Admin = () => {
           </div>
         )}
       </main>
+
+      <AlertDialog open={Boolean(deleting)} onOpenChange={(open) => !open && setDeleting(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Удалить заявку?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Заявка от {deleting?.name} ({deleting?.phone}) будет удалена безвозвратно.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleteLoading}>Отмена</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault();
+                deleteOrder();
+              }}
+              disabled={deleteLoading}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {deleteLoading ? 'Удаляем...' : 'Удалить'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
