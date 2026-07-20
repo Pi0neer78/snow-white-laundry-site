@@ -338,18 +338,19 @@ const Admin = () => {
                 <TableHead className="h-9 py-1.5">IP-адрес</TableHead>
                 <TableHead className="h-9 py-1.5">Дата</TableHead>
                 <TableHead className="w-48 h-9 py-1.5">Статус</TableHead>
+                <TableHead className="w-10 h-9 py-1.5" />
               </TableRow>
             </TableHeader>
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-10 text-muted-foreground">
+                  <TableCell colSpan={8} className="text-center py-10 text-muted-foreground">
                     Загрузка заявок...
                   </TableCell>
                 </TableRow>
               ) : orders.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-10 text-muted-foreground">
+                  <TableCell colSpan={8} className="text-center py-10 text-muted-foreground">
                     Заявок пока нет
                   </TableCell>
                 </TableRow>
@@ -395,6 +396,16 @@ const Admin = () => {
                           ))}
                         </SelectContent>
                       </Select>
+                    </TableCell>
+                    <TableCell className="py-1.5 text-right">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                        onClick={() => setDeleting(order)}
+                      >
+                        <Icon name="Trash2" size={16} />
+                      </Button>
                     </TableCell>
                       </TableRow>
                     </ContextMenuTrigger>
