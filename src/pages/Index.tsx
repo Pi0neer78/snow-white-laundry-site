@@ -101,7 +101,7 @@ const Index = () => {
               <Icon name="Sparkles" size={16} /> Чисто. Свежо. Вовремя.
             </span>
             <h1 className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.1] mb-6">
-              Профессиональная <span className="text-primary">прачечная</span> для вас и вашего бизнеса
+              Профессиональная <span className="text-red-600 underline">лицензированная</span> <span className="text-primary">прачечная</span> для вас и вашего бизнеса
             </h1>
             <p className="text-lg text-muted-foreground max-w-md mb-8">
               Стираем и гладим бельё для населения, больниц, кафе и организаций. Забираем и доставляем — вам остаётся только наслаждаться свежестью.
